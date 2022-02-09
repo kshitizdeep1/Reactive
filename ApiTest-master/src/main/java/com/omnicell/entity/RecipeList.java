@@ -1,0 +1,13 @@
+package com.omnicell.entity;
+
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class RecipeList {
+
+	private List<Recipe> recipe;
+}
