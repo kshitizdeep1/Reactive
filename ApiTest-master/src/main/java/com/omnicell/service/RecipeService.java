@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.server.ServerResponse;
 
 import com.omnicell.entity.Recipe;
 import com.omnicell.entity.RecipeList;
@@ -65,8 +63,8 @@ public class RecipeService {
 
 	public Flux<Recipe> getAllRecipe() {
 		// TODO Auto-generated method stub
-		Flux<Recipe> l = recipeRepository.findAll();
-		return l;
+		Flux<Recipe> listRecipe = recipeRepository.findAll();
+		return listRecipe;
 	}
 	//@Transactional
 	public Flux<RecipeList> initialAdd(List<Recipe> recipeList) {

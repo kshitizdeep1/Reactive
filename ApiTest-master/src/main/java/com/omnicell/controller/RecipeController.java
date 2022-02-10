@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.server.ServerResponse;
 
 import com.omnicell.entity.Recipe;
 import com.omnicell.entity.RecipeList;
@@ -38,18 +37,12 @@ public class RecipeController {
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<ResponseEntity<Recipe>> getRecipeById(@PathVariable("id") Long id) {
 		Mono<Recipe> m = recipeService.getRecipeById(id);
-		if (m == null) {
-			return m.map(k -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-		}
 		return m.map(k -> new ResponseEntity<>(k, HttpStatus.OK));
 	}
 
 	@GetMapping(value = "{id}/show", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<ResponseEntity<String>> getRecipeImageById(@PathVariable("id") Long id) {
 		Mono<Recipe> m = recipeService.getImageByID(id);
-		if (m == null) {
-			return m.map(k -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-		}
 		return m.map(k -> new ResponseEntity<>(k.getImage(), HttpStatus.OK));
 	}
 
