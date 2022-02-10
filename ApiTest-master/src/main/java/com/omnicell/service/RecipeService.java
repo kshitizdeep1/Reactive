@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.omnicell.entity.Recipe;
 import com.omnicell.entity.RecipeList;
@@ -29,10 +30,12 @@ public class RecipeService {
 		return recipeRepository.findById(id);
 	}
 
+	@Transactional
 	public Mono<Recipe> addRecipe(Recipe recipe) {
 		return recipeRepository.save(recipe);
 	}
 
+	@Transactional
 	public Mono<Recipe> updateRecipe(Recipe recipe, Long id) {
 		// TODO Auto-generated method stub
 		return recipeRepository.findById(id).flatMap(existingRecipe -> {
@@ -53,6 +56,7 @@ public class RecipeService {
 
 	}
 
+	@Transactional
 	public Mono<Void> deleteRecipeById(Long id) {
 		// TODO Auto-generated method stub
 		return recipeRepository.deleteById(id);
@@ -66,7 +70,7 @@ public class RecipeService {
 		Flux<Recipe> listRecipe = recipeRepository.findAll();
 		return listRecipe;
 	}
-	//@Transactional
+	@Transactional
 	public Flux<RecipeList> initialAdd(List<Recipe> recipeList) {
 		return recipeRepository.saveAll(recipeList).thenMany(Flux.just(new RecipeList(recipeList)));
 
