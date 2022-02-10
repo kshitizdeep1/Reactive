@@ -55,9 +55,11 @@ public class RecipeService {
 
 	}
 
-	public Mono<Recipe> deleteRecipeById(Long id) {
+	public Mono<Void> deleteRecipeById(Long id) {
 		// TODO Auto-generated method stub
-		return recipeRepository.findById(id).flatMap(recipe->{return recipeRepository.delete(recipe).then(Mono.just(recipe));});
+		return recipeRepository.deleteById(id);
+		//returns Mono<Recipe>
+		//return recipeRepository.findById(id).flatMap(recipe->{return recipeRepository.delete(recipe).then(Mono.just(recipe));});
 		
 	}
 
@@ -67,8 +69,8 @@ public class RecipeService {
 		return l;
 	}
 	//@Transactional
-	public Mono<RecipeList> initialAdd(List<Recipe> recipeList) {
-		return recipeRepository.saveAll(recipeList).then(Mono.just(new RecipeList(recipeList)));
+	public Flux<RecipeList> initialAdd(List<Recipe> recipeList) {
+		return recipeRepository.saveAll(recipeList).thenMany(Flux.just(new RecipeList(recipeList)));
 
 	}
 

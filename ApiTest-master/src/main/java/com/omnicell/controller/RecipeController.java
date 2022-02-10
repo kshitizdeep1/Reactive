@@ -65,7 +65,7 @@ public class RecipeController {
 	}
 
 	@PostMapping(value = "/all", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Mono<RecipeList> addAllRecipe(@RequestBody List<Recipe> recipeList) {
+	public Flux<RecipeList> addAllRecipe(@RequestBody List<Recipe> recipeList) {
 		return recipeService.initialAdd(recipeList);
 	}
 
@@ -77,13 +77,13 @@ public class RecipeController {
 	}
 
 	@DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Mono<ResponseEntity<Recipe>> deleteRecipe(@PathVariable("id") Long id) {
+	public Mono<Object> deleteRecipe(@PathVariable("id") Long id) {
 
 		return recipeService.deleteRecipeById(id).map(k -> new ResponseEntity<>(k, HttpStatus.OK));
 	}
 
 	@PostMapping(value = "/addApi", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Mono<RecipeList> addApi() {
+	public Flux<RecipeList> addApi() {
 		RestTemplate restTemplate = new RestTemplate();
 		// System.out.println(restTemplate.getForObject(recipeUrl, RecipeList.class));
 		Recipe[] recipeList = restTemplate.getForObject(recipeUrl, Recipe[].class);
